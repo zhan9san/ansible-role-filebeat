@@ -5,6 +5,7 @@
       - apt-transport-https
       - gnupg2
     state: present
+    update_cache: true
 
 - name: Add Elasticsearch apt key.
   ansible.builtin.apt_key:
