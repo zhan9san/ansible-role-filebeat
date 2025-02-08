@@ -1,0 +1,9 @@
+---
+- name: Setup repository
+  ansible.builtin.include_tasks:
+    file: "setup-{{ ansible_os_family | lower }}.yml"
+
+- name: Install Filebeat
+  ansible.builtin.package:
+    name: filebeat
+    state: present

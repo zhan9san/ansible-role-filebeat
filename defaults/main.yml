@@ -1,0 +1,6 @@
+---
+filebeat_proxy_url: ''
+filebeat_setup_kibana_host: http://localhost:5601
+
+filebeat_output_elasticsearch_hosts:
+    - localhost:9200

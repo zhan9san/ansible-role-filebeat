@@ -1,0 +1,30 @@
+filebeat.inputs:
+  - type: filestream
+    id: my-filestream-id
+    enabled: false
+    paths:
+      - /var/log/*.log
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+setup.template.settings:
+  index.number_of_shards: 1
+setup.kibana:
+  {% if filebeat_setup_kibana_host %}
+  host: {{ filebeat_setup_kibana_host }}
+  {% endif %}
+  {% if filebeat_proxy_url %}
+  proxy_url: {{ filebeat_proxy_url }}
+  {% endif %}
+output.elasticsearch:
+  hosts: {{ filebeat_output_elasticsearch_hosts | to_yaml }}
+  {% if filebeat_proxy_url %}
+  proxy_url: {{ filebeat_proxy_url }}
+  {% endif %}
+  preset: balanced
+processors:
+  - add_host_metadata:
+      when.not.contains.tags: forwarded
+  - add_cloud_metadata: ~
+  - add_docker_metadata: ~
+  - add_kubernetes_metadata: ~
